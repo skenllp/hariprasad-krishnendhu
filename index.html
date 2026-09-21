@@ -113,13 +113,74 @@
   }
 
   .gold-text{
-    background:linear-gradient(180deg, #c9a84c 0%, #8B6914 55%, #6b4f0f 100%);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
+    background: linear-gradient(
+      105deg,
+      #6b4f0f 0%,
+      #c9a84c 20%,
+      #f5e07a 30%,
+      #fff8d6 37%,
+      #f5e07a 44%,
+      #c9a84c 55%,
+      #8B6914 70%,
+      #6b4f0f 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer-glare 4s ease-in-out infinite;
+  }
+
+  @keyframes shimmer-glare {
+    0%   { background-position: 100% 50%; }
+    50%  { background-position: 0%   50%; }
+    100% { background-position: 100% 50%; }
   }
 
   /* ---------- hero name focal treatment ---------- */
   .name-glow{
-    filter:drop-shadow(0 4px 18px rgba(100,70,10,0.35)) drop-shadow(0 2px 6px rgba(43,38,32,0.25));
+    position: relative;
+    filter: drop-shadow(0 2px 22px rgba(184,146,60,0.55))
+            drop-shadow(0 4px 40px rgba(100,70,10,0.38))
+            drop-shadow(0 1px 4px rgba(43,38,32,0.22));
+    animation: name-pulse-glow 3.5s ease-in-out infinite;
+  }
+
+  @keyframes name-pulse-glow {
+    0%, 100% { filter: drop-shadow(0 2px 22px rgba(184,146,60,0.55)) drop-shadow(0 4px 40px rgba(100,70,10,0.38)) drop-shadow(0 1px 4px rgba(43,38,32,0.22)); }
+    50%       { filter: drop-shadow(0 2px 38px rgba(229,193,87,0.85)) drop-shadow(0 6px 55px rgba(180,140,50,0.55)) drop-shadow(0 1px 4px rgba(43,38,32,0.22)); }
+  }
+
+  /* glare sweep overlay on hero names */
+  .hero-name-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .hero-name-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255,248,210,0.55) 48%,
+      rgba(255,255,255,0.72) 52%,
+      transparent 70%
+    );
+    background-size: 250% 100%;
+    background-position: 150% 50%;
+    animation: glare-sweep 4s ease-in-out infinite;
+    pointer-events: none;
+    border-radius: 4px;
+    mix-blend-mode: overlay;
+  }
+
+  @keyframes glare-sweep {
+    0%   { background-position: 150% 50%; opacity: 0; }
+    30%  { opacity: 1; }
+    50%  { background-position: -50% 50%; }
+    70%  { opacity: 0; }
+    100% { background-position: -50% 50%; opacity: 0; }
   }
 
   .glow-gold{ box-shadow:0 0 0 1px rgba(184,146,60,0.35), 0 0 30px rgba(184,146,60,0.18), 0 0 70px rgba(184,146,60,0.08); }
@@ -967,9 +1028,11 @@
       </div>
     </div>
 
-    <h1 class="letters in name-glow font-names italic gold-text text-[11vw] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight text-center" id="name1">
-      <span>H</span><span>a</span><span>r</span><span>i</span><span>p</span><span>r</span><span>a</span><span>s</span><span>a</span><span>d</span><span>&nbsp;</span><span>P</span><span>.</span><span>&nbsp;</span><span>S</span><span>.</span>
-    </h1>
+    <div class="hero-name-wrap">
+      <h1 class="letters in name-glow font-names italic gold-text text-[11vw] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight text-center" id="name1">
+        <span>H</span><span>a</span><span>r</span><span>i</span><span>p</span><span>r</span><span>a</span><span>s</span><span>a</span><span>d</span><span>&nbsp;</span><span>P</span><span>.</span><span>&nbsp;</span><span>S</span><span>.</span>
+      </h1>
+    </div>
 
     <div class="reveal in flex items-center gap-4 my-4 sm:my-6 lg:my-7" style="transition-delay:.5s">
       <span class="h-px w-10 sm:w-16 bg-gradient-to-r from-transparent to-[var(--gold)]"></span>
@@ -977,9 +1040,11 @@
       <span class="h-px w-10 sm:w-16 bg-gradient-to-l from-transparent to-[var(--gold)]"></span>
     </div>
 
-    <h1 class="letters in name-glow font-names italic gold-text text-[11vw] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight text-center" id="name2">
-      <span>K</span><span>r</span><span>i</span><span>s</span><span>h</span><span>n</span><span>e</span><span>n</span><span>d</span><span>h</span><span>u</span><span>&nbsp;</span><span>R</span><span>a</span><span>j</span><span>e</span><span>s</span><span>h</span>
-    </h1>
+    <div class="hero-name-wrap" style="animation-delay: 2s">
+      <h1 class="letters in name-glow font-names italic gold-text text-[11vw] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight text-center" id="name2" style="animation-delay: 2s">
+        <span>K</span><span>r</span><span>i</span><span>s</span><span>h</span><span>n</span><span>e</span><span>n</span><span>d</span><span>h</span><span>u</span><span>&nbsp;</span><span>R</span><span>a</span><span>j</span><span>e</span><span>s</span><span>h</span>
+      </h1>
+    </div>
 
     <p class="reveal in mt-8 max-w-xs sm:max-w-md text-center text-sm sm:text-base text-[var(--ink-muted)] font-poppins font-light leading-relaxed" style="transition-delay:.75s">
       Together with our families, we joyfully invite you to celebrate our wedding.
@@ -1004,8 +1069,24 @@
     <div class="kasavu w-24 mx-auto my-10 reveal"></div>
 
     <p class="reveal text-sm sm:text-base text-[var(--ink-muted)] leading-relaxed font-light max-w-xl mx-auto">
-      From one beautiful beginning came a lifetime of memories. With love in our hearts and our families beside us, we begin our forever.
+      A beautiful journey, countless memories, and a new chapter waiting to begin. We would be honoured to celebrate this special day with you.
     </p>
+
+    <div class="reveal mt-10 flex flex-col items-center gap-5 text-center">
+      <div class="flex flex-col sm:flex-row gap-6 sm:gap-16 justify-center w-full max-w-xl mx-auto">
+        <div class="flex-1">
+          <p class="text-[9px] tracking-[0.3em] uppercase text-[var(--gold)] mb-2">Groom's Parents</p>
+          <p class="font-names italic text-base sm:text-lg text-[var(--ink)] leading-snug">Beena Sachidanandan</p>
+          <p class="font-names italic text-base sm:text-lg text-[var(--ink)] leading-snug">&amp; P.G. Sachidanandan</p>
+        </div>
+        <div class="hidden sm:block w-px bg-[var(--glass-border)] self-stretch"></div>
+        <div class="flex-1">
+          <p class="text-[9px] tracking-[0.3em] uppercase text-[var(--gold)] mb-2">Bride's Parents</p>
+          <p class="font-names italic text-base sm:text-lg text-[var(--ink)] leading-snug">Mrs. Smitha Rajesh</p>
+          <p class="font-names italic text-base sm:text-lg text-[var(--ink)] leading-snug">&amp; Mr. Rajesh Appukuttan</p>
+        </div>
+      </div>
+    </div>
 
     <!-- mini timeline -->
     <div class="mt-16 grid grid-cols-3 gap-4 sm:gap-8 stagger" style="--i:0">
@@ -1377,7 +1458,7 @@
 
       <div>
         <label class="text-[10px] tracking-[0.25em] uppercase text-[var(--ink-muted)] block mb-2">Phone Number</label>
-        <input required type="tel" name="phone" placeholder="+91 8330029778"
+        <input required type="tel" name="phone"  
           class="w-full bg-transparent border border-[var(--glass-border)] rounded-xl px-4 py-3 text-sm outline-none focus:border-[var(--gold)] transition-colors placeholder:text-[var(--ink-muted)]" />
       </div>
 
