@@ -1398,7 +1398,7 @@
   <div class="kasavu kasavu-thick reveal max-w-4xl mx-auto"></div>
 
   <!-- ============ PHOTO GALLERY ============ -->
-  <section id="photo-gallery" class="snap-section relative px-6 py-28 sm:py-36 max-w-5xl mx-auto">
+  <!-- <section id="photo-gallery" class="snap-section relative px-6 py-28 sm:py-36 max-w-5xl mx-auto">
     <div class="reveal text-center mb-14">
       <p class="text-[11px] tracking-[0.5em] uppercase text-[var(--gold)] mb-3">Captured Moments</p>
       <h2 class="font-display text-3xl sm:text-4xl gallery-section-heading">Our Gallery</h2>
@@ -1409,8 +1409,7 @@
       </div>
     </div>
 
-    <div class="reveal-scale gallery-grid" id="photoGalleryGrid">
-      <!-- Hero / large item -->
+    <div class="reveal-scale gallery-grid" id="photoGalleryGrid"> 
       <div class="gallery-item gallery-item-hero" data-img="image.png" data-caption="Hariprasad &amp; Krishnendhu">
         <img src="image.png" alt="Hariprasad and Krishnendhu" loading="lazy" />
         <div class="gallery-item-overlay">
@@ -1420,7 +1419,7 @@
 
       
     </div>
-  </section>
+  </section> -->
 
   <!-- Gallery Lightbox -->
   <div id="galleryLightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/90 backdrop-blur-md px-6" style="opacity:0; pointer-events:none;">
@@ -1825,16 +1824,31 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* ---------------- RSVP form ---------------- */
-  document.getElementById('rsvpForm').addEventListener('submit', (e) => {
+  const RSVP_URL = 'https://script.google.com/macros/s/AKfycbx8D50nwO51PJKbricL1_o4tN-GwczAPPssB4TzdnJY08xfrI9qEdbpsf0w4gB5Kn2U/exec';
+  document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (!RSVP_URL) return;
+    const form = e.currentTarget;
     const btn = document.getElementById('rsvpSubmit');
     const btnText = document.getElementById('rsvpBtnText');
+    const success = document.getElementById('rsvpSuccess');
+    const payload = Object.fromEntries(new FormData(form).entries());
     btnText.textContent = 'Sending...';
     btn.disabled = true;
-    setTimeout(() => {
-      btnText.textContent = 'Sent';
-      document.getElementById('rsvpSuccess').classList.remove('hidden');
-    }, 1000);
+    try {
+      const res = await fetch(RSVP_URL, { method: 'POST', body: JSON.stringify(payload) });
+      const data = await res.json();
+      if (data && data.ok) {
+        btnText.textContent = 'Sent';
+        success.classList.remove('hidden');
+        form.reset();
+      } else {
+        throw new Error(data && data.message || 'Server error');
+      }
+    } catch (err) {
+      btnText.textContent = 'Send RSVP';
+      btn.disabled = false;
+    }
   });
 
   /* ---------------- ripple effect ---------------- */
